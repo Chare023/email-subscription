@@ -32,7 +32,7 @@ app.post('/', (req, res) => {
         console.log('JSON file has been saved');
       });
     } else {
-      res.status(400).send({message: 'Nema podataka unesenih u json fajl '});
+      res.status('400').send({message: 'Nema podataka unesenih u json fajl '});
     }
   }
   validateEmail(req.body.email);

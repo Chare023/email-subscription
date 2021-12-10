@@ -24,13 +24,16 @@ class App extends React.Component {
     if(this.state.email !== ''){
       axios.post('http://localhost:5000', {email : this.state.email})
         .then((res) => {
+          console.log(res.status);
           if (res.status === 200) {
             this.setState({
               emailSaBackenda: res.data, 
               email: ''}) 
-          } else {
-            console.log(res.body)
           }
+        }).catch((err) => {
+          this.setState({
+            emailSaBackenda: err.response.data.message, 
+            email: ''});
         })
     } else {
       this.setState({
