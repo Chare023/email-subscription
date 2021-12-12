@@ -16,15 +16,22 @@ app.get('/', (req, res) => {
 
 app.post('/', (req, res) => {
 
+  let user= {
+    'firstName': req.body.firstName,
+    'lastName': req.body.lastName,
+    'email': req.body.email,
+    'password': req.body.password
+  }
+
   //Validacija maila
-  function validateEmail (emailAdress)
+  function validateEmail (user)
   {
     let regexEmail = /^\w+([\.-]?\w+)*@\w+([\.-]?\w+)*(\.\w{2,3})+$/;
-    if (emailAdress.match(regexEmail)) {
+    if (user.email.match(regexEmail)) {
       res.send('Successfully subscribed');
 
       //Upis u JSON
-      fs.appendFile(path, JSON.stringify({email: emailAdress}) + "\r", 'utf8', (err) => {
+      fs.appendFile(path, JSON.stringify(user) + "\r", 'utf8', (err) => {
         if (err) {
           console.log('An error occured while writing JSON Object to File.');
           return console.log(err);
@@ -35,7 +42,7 @@ app.post('/', (req, res) => {
       res.status('400').send({message: 'Nema podataka unesenih u json fajl '});
     }
   }
-  validateEmail(req.body.email);
+  validateEmail(user);
 })
 
 app.listen(port, () => {
